@@ -1,0 +1,40 @@
+{
+  "environment_data": {
+    "history": {
+      "penalty_per_year_polluted": 0.04,
+      "max_history_penalty_years": 4.0
+    },
+    "current_air": {
+      "polluted_city": {
+        "name": "Smog / Miasto przemysłowe",
+        "hr": 1.10
+      },
+      "standard_city": {
+        "name": "Typowe miasto / Przedmieścia",
+        "hr": 1.04
+      },
+      "rural_clean": {
+        "name": "Czysta wieś / Blisko lasu",
+        "hr": 0.98
+      },
+      "microclimate": {
+        "name": "Uzdrowisko / Góry / Morze",
+        "hr": 0.94
+      }
+    },
+    "current_noise": {
+      "noisy": {
+        "name": "Głośno (centrum, arteria komunikacyjna)",
+        "hr": 1.06
+      },
+      "moderate": {
+        "name": "Umiarkowanie (osiedle, boczna ulica)",
+        "hr": 1.0
+      },
+      "quiet": {
+        "name": "Cisza (tereny podmiejskie, wieś)",
+        "hr": 0.96
+      }
+    }
+  }
+}

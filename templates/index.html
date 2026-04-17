@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Śmierci - Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1f2937; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #34d399; }
+        .step-section { transition: opacity 0.3s ease; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-2xl w-full bg-gray-800 rounded-xl shadow-2xl border border-gray-700 flex flex-col overflow-hidden">
+        
+        <div class="p-6 border-b border-gray-700 bg-gray-800/50 text-center">
+            <h1 class="text-2xl font-bold text-emerald-400">Kalkulator Przewidywanej Długości Życia</h1>
+        </div>
+
+        <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar" style="max-height: 75vh;">
+            
+            <div id="step1" class="step-section space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 1: Podstawy</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1 uppercase">Wiek</label>
+                        <input type="number" id="age" value="25" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600 focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1 uppercase">Płeć</label>
+                        <select id="gender" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600 focus:border-emerald-500">
+                            <option value="mężczyzna">Mężczyzna</option>
+                            <option value="kobieta">Kobieta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1 uppercase">Waga (kg)</label>
+                        <input type="number" id="weight" value="80" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1 uppercase">Wzrost (cm)</label>
+                        <input type="number" id="height" value="180" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600">
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <label class="block text-xs text-gray-400 font-bold uppercase tracking-widest border-l-2 border-emerald-500 pl-2">Genetyka</label>
+                    <select id="ancestors_choice" class="w-full bg-gray-700 rounded p-2 text-sm border border-gray-600 mb-3">
+                        <option value="standard">Przeciętna długowieczność przodków</option>
+                        <option value="good">Dobra (85+)</option>
+                        <option value="exceptional">Wyjątkowa (90+)</option>
+                    </select>
+                    <select id="diseases_choice" class="w-full bg-gray-700 rounded p-2 text-sm border border-gray-600">
+                        <option value="no_risk">Brak obciążeń dziedzicznych</option>
+                        <option value="moderate_risk">Umiarkowane ryzyko (np. cukrzyca)</option>
+                        <option value="high_risk">Wysokie ryzyko (choroby przed 50-tką)</option>
+                    </select>
+                </div>
+                <button onclick="nextStep(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-4 rounded-lg mt-4 uppercase tracking-widest">Dalej: Używki →</button>
+            </div>
+
+            <div id="step2" class="step-section hidden space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 2: Używki</h2>
+                
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Nikotyna</h3>
+                    <div class="grid grid-cols-2 gap-4 items-end">
+                        <div><label class="block text-[10px] text-gray-400 uppercase">Papierosy/dzień</label><input type="number" id="cig_per_day" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
+                        <div><label class="block text-[10px] text-gray-400 uppercase">Lata palenia</label><input type="number" id="cig_years" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 items-end">
+                        <div><select id="cig_active" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"><option value="false">Rzuciłem/Nie palę</option><option value="true">Palę obecnie</option></select></div>
+                        <div><label class="block text-[10px] text-gray-400">Wiek rzucenia (0=n/d)</label><input type="number" id="cig_quit_age" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
+                    </div>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-[10px] text-gray-500 uppercase mb-2">Vape i Podgrzewacze</p>
+                        <div class="grid grid-cols-3 gap-2 items-end">
+                            <input type="number" id="vape_years" placeholder="Vape lata" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                            <select id="vape_active" class="bg-gray-700 p-2 rounded text-sm border border-gray-600"><option value="false">Vape: Nie</option><option value="true">Vape: Tak</option></select>
+                            <input type="number" id="vape_quit_age" placeholder="Wiek rz." class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Alkohol (tygodniowo)</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <input type="number" id="beer_quantity" placeholder="Piwo" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        <input type="number" id="wine_quantity" placeholder="Wino" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        <input type="number" id="vodka_quantity" placeholder="Wódka" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="nextStep(1)" class="w-1/3 bg-gray-700 py-4 rounded-lg uppercase text-sm">Wstecz</button>
+                    <button onclick="nextStep(3)" class="w-2/3 bg-emerald-600 py-4 rounded-lg uppercase text-sm font-bold">Dalej: Praca i Ruch →</button>
+                </div>
+            </div>
+
+            <div id="step3" class="step-section hidden space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 3: Styl Życia</h2>
+
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">Aktywność Fizyczna</h3>
+                    <div class="grid grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 uppercase">Lata aktywności</label>
+                            <input type="number" id="year_activity" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 uppercase">Obecny poziom</label>
+                            <select id="current_level" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                                <option value="sedentary">Siedzący</option>
+                                <option value="low_active">Mało Aktywny</option>
+                                <option value="active">Aktywny</option>
+                                <option value="athlete">Sportowiec</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Zawód</h3>
+                    <select id="occ_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 overflow-y-auto">
+                        <optgroup label="IT & Technologia">
+                            <option value="software_engineer">Programista</option>
+                            <option value="frontend_dev">Frontend Developer</option>
+                            <option value="backend_dev">Backend Developer</option>
+                            <option value="fullstack_dev">Fullstack Developer</option>
+                            <option value="devops">DevOps Engineer</option>
+                            <option value="data_scientist">Data Scientist</option>
+                            <option value="data_analyst">Analityk danych</option>
+                            <option value="cybersecurity">Specjalista cyberbezpieczeństwa</option>
+                            <option value="qa_tester">Tester oprogramowania</option>
+                            <option value="it_support">Wsparcie IT</option>
+                            <option value="ux_designer">UX Designer</option>
+                            <option value="graphic_designer">Grafik</option>
+                            <option value="game_dev">Game developer</option>
+                        </optgroup>
+
+                        <optgroup label="Medycyna & Zdrowie">
+                            <option value="doctor">Lekarz</option>
+                            <option value="surgeon">Chirurg</option>
+                            <option value="anesthesiologist">Anestezjolog</option>
+                            <option value="nurse">Pielęgniarka</option>
+                            <option value="paramedic">Ratownik medyczny</option>
+                            <option value="pharmacist">Farmaceuta</option>
+                            <option value="dentist">Dentysta</option>
+                            <option value="physiotherapist">Fizjoterapeuta</option>
+                            <option value="psychologist">Psycholog</option>
+                            <option value="psychiatrist">Psychiatra</option>
+                        </optgroup>
+
+                        <optgroup label="Edukacja & Nauka">
+                            <option value="teacher">Nauczyciel</option>
+                            <option value="kindergarten_teacher">Przedszkolanka</option>
+                            <option value="professor">Wykładowca</option>
+                            <option value="biologist">Biolog</option>
+                            <option value="chemist">Chemik</option>
+                            <option value="physicist">Fizyk</option>
+                        </optgroup>
+
+                        <optgroup label="Służby Mundurowe & Ratownicze">
+                            <option value="police">Policjant</option>
+                            <option value="detective">Detektyw</option>
+                            <option value="firefighter">Strażak</option>
+                            <option value="soldier">Żołnierz</option>
+                            <option value="security_guard">Ochroniarz</option>
+                        </optgroup>
+
+                        <optgroup label="Przemysł, Budownictwo & Rolnictwo">
+                            <option value="construction_worker">Budowlaniec</option>
+                            <option value="electrician">Elektryk</option>
+                            <option value="plumber">Hydraulik</option>
+                            <option value="welder">Spawacz</option>
+                            <option value="carpenter">Stolarz</option>
+                            <option value="bricklayer">Murarz</option>
+                            <option value="roofer">Dekarz</option>
+                            <option value="miner">Górnik</option>
+                            <option value="factory_worker">Pracownik fabryki</option>
+                            <option value="machine_operator">Operator maszyn</option>
+                            <option value="warehouse_worker">Magazynier</option>
+                            <option value="forklift_operator">Operator wózka widłowego</option>
+                            <option value="farmer">Rolnik</option>
+                            <option value="gardener">Ogrodnik</option>
+                        </optgroup>
+
+                        <optgroup label="Transport & Lotnictwo">
+                            <option value="truck_driver">Kierowca TIR</option>
+                            <option value="bus_driver">Kierowca autobusu</option>
+                            <option value="taxi_driver">Taksówkarz</option>
+                            <option value="courier">Kurier</option>
+                            <option value="pilot">Pilot</option>
+                            <option value="flight_attendant">Stewardessa</option>
+                            <option value="air_traffic_controller">Kontroler lotów</option>
+                        </optgroup>
+
+                        <optgroup label="Prawo, Biznes & Administracja">
+                            <option value="lawyer">Prawnik</option>
+                            <option value="judge">Sędzia</option>
+                            <option value="prosecutor">Prokurator</option>
+                            <option value="accountant">Księgowy</option>
+                            <option value="auditor">Audytor</option>
+                            <option value="banker">Bankowiec</option>
+                            <option value="hr">HR</option>
+                            <option value="recruiter">Rekruter</option>
+                            <option value="manager">Manager</option>
+                        </optgroup>
+
+                        <optgroup label="Handel & Usługi">
+                            <option value="retail_worker">Sprzedawca</option>
+                            <option value="cashier">Kasjer</option>
+                            <option value="store_manager">Kierownik sklepu</option>
+                            <option value="call_center">Call center</option>
+                            <option value="chef">Kucharz</option>
+                            <option value="waiter">Kelner</option>
+                            <option value="bartender">Barman</option>
+                            <option value="cleaner">Sprzątacz</option>
+                            <option value="janitor">Woźny</option>
+                        </optgroup>
+
+                        <optgroup label="Media & Komunikacja">
+                            <option value="journalist">Dziennikarz</option>
+                            <option value="editor">Redaktor</option>
+                            <option value="photographer">Fotograf</option>
+                            <option value="social_worker">Pracownik socjalny</option>
+                        </optgroup>
+
+                        <optgroup label="Inżynieria & Architektura">
+                            <option value="architect">Architekt</option>
+                            <option value="civil_engineer">Inżynier budownictwa</option>
+                            <option value="mechanical_engineer">Inżynier mechanik</option>
+                        </optgroup>
+                    </select>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-xs text-gray-400 uppercase">Dodatkowy stres (0.00 = Neutralny)</label>
+                            <span id="stressValue" class="text-emerald-400 font-bold">0.00</span>
+                        </div>
+                        <input type="range" id="stress_modifier" min="-0.1" max="0.3" step="0.01" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-emerald-500" oninput="document.getElementById('stressValue').innerText = this.value">
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mt-8 pb-2">
+        <button type="button" onclick="nextStep(2)" 
+                class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg transition-all uppercase text-sm">
+            ← Wstecz
+        </button>
+        <button type="button" onclick="nextStep(4)" class="w-2/3 bg-emerald-600 ...">Dalej: Środowisko →</button>
+    </div>
+</div>
+            <div id="step4" class="step-section hidden space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 4: Regeneracja i Otoczenie</h2>
+
+                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Sen i Odpoczynek
+                        </h3>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 uppercase">Długość snu na dobę</label>
+                            <select id="sleep_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
+                                <option value="optimal_sleep">7 - 8 godzin (Złoty standard)</option>
+                                <option value="borderline_sleep">6 - 7 godzin (Lekki niedobór)</option>
+                                <option value="short_sleep">Poniżej 6 godzin (Deprywacja)</option>
+                                <option value="long_sleep">Powyżej 9 godzin (Nadmiar)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Relacje Społeczne
+                        </h3>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 uppercase">Status relacji i wsparcia</label>
+                            <select id="relation_keys" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
+                                <option value="isolated">Izolacja (brak bliskich osób, rzadki kontakt z ludźmi)</option>
+                                <option value="average">Przeciętne (kilku znajomych, kontakt z rodziną, ale bez głębokich więzi)</option>
+                                <option value="strong">Silne (poczucie wspólnoty, kochająca rodzina, krąg wiernych przyjaciół)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Środowisko życia
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1 uppercase">Lata w zanieczyszczonym otoczeniu</label>
+                                <input type="number" id="years_in_smog" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1 uppercase">Obecna jakość powietrza</label>
+                                <select id="environment_air_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
+                                    <option value="microclimate">Uzdrowisko / Góry / Morze</option>
+                                    <option value="rural_clean">Czysta wieś / Blisko lasu</option>
+                                    <option value="standard_city">Typowe miasto / Przedmieścia</option>
+                                    <option value="polluted_city">Smog / Miasto przemysłowe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1 uppercase">Poziom hałasu w miejscu zamieszkania</label>
+                            <select id="environment_noise_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
+                                <option value="quiet">Cisza (tereny podmiejskie, wieś)</option>
+                                <option value="moderate" selected>Umiarkowanie (osiedle, boczna ulica)</option>
+                                <option value="noisy">Głośno (centrum, arteria komunikacyjna)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button type="button" onclick="nextStep(3)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm">
+                            ← Wstecz
+                        </button>
+                        <button type="button" onclick="nextStep(5)" class="w-2/3 bg-emerald-600 ...">Dalej: Środowisko →</button>
+                    </div>
+                </div>
+                    <div id="step5" class="step-section hidden space-y-6">
+                        <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 5: Odżywianie i Kofeina</h2>
+
+                        <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wider">Model żywienia</label>
+                                <select id="diet_choice" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
+                                    <option value="longevity_diet">Dieta długowieczności (Śródziemnomorska)</option>
+                                    <option value="balanced">Dieta zbilansowana</option>
+                                    <option value="standard_western">Dieta zachodnia (Standard)</option>
+                                    <option value="ultra_processed">Dieta wysokoprzetworzona (Fast-food)</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
+                                    <input type="checkbox" id="sugar_addiction" class="w-4 h-4 accent-emerald-500">
+                                    <label for="sugar_addiction" class="text-xs text-gray-300">Nadmiar cukru codziennie</label>
+                                </div>
+                                <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
+                                    <input type="checkbox" id="low_hydration" class="w-4 h-4 accent-emerald-500">
+                                    <label for="low_hydration" class="text-xs text-gray-300">Słabe nawodnienie</label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1 uppercase">Lata złego odżywiania w przeszłości</label>
+                                <input type="number" id="years_history_input" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                            <h3 class="text-emerald-500 font-bold text-xs uppercase tracking-widest">Kofeina i Energetyki</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1 uppercase">Źródło</label>
+                                    <select id="stimulants_choice" class="w-full bg-gray-700 p-2 rounded text-xs border border-gray-600">
+                                        <option value="none">Brak</option>
+                                        <option value="coffee_only">Kawa / Herbata</option>
+                                        <option value="energy_only">Tylko energetyki</option>
+                                        <option value="mixed">Mieszane</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1 uppercase">Dawkowanie</label>
+                                    <select id="stimulants_dosages" class="w-full bg-gray-700 p-2 rounded text-xs border border-gray-600">
+                                        <option value="low">Małe (1 porcja)</option>
+                                        <option value="moderate">Średnie (2-3 porcje)</option>
+                                        <option value="high">Duże (4+ porcje)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 pb-6">
+                            <button type="button" onclick="nextStep(4)" class="w-1/3 bg-gray-700 py-4 rounded-lg uppercase text-sm font-bold">Wstecz</button>
+                            <button type="button" onclick="nextStep(6)" class="w-2/3 bg-emerald-600 ...">Dalej: Styl Życia →</button>
+                        </div>
+                    </div>
+                    <div id="step6" class="step-section hidden space-y-6">
+                        <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 6: Styl Życia i Nawyki</h2>
+                        
+                        <p class="text-xs text-gray-400 mb-4">Zaznacz wszystkie stwierdzenia, które są prawdziwe w Twoim przypadku:</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="life_purpose" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="life_purpose" class="text-xs text-gray-300">Mam w życiu jasny cel i pasję</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="dental_hygiene" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="dental_hygiene" class="text-xs text-gray-300">Codziennie nitkuję zęby / używam irygatora</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="fast_walking" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="fast_walking" class="text-xs text-gray-300">Moje naturalne tempo marszu jest szybkie</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="optimism" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="optimism" class="text-xs text-gray-300">Jestem optymistą</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="lifelong_learning" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="lifelong_learning" class="text-xs text-gray-300">Regularnie uczę się nowych rzeczy</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="thermal_hormesis" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="thermal_hormesis" class="text-xs text-gray-300">Stosuję saunę lub morsowanie</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="pet_ownership" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="pet_ownership" class="text-xs text-gray-300">Posiadam zwierzę domowe (np. pies)</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
+                                <input type="checkbox" id="air_quality" class="subtle-check w-5 h-5 accent-emerald-500">
+                                <label for="air_quality" class="text-xs text-gray-300">Używam oczyszczacza powietrza</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
+                                <input type="checkbox" id="noise_pollution" class="subtle-check w-5 h-5 accent-red-500">
+                                <label for="noise_pollution" class="text-xs text-gray-300">Często sypiam w hałasie</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
+                                <input type="checkbox" id="sitting_time" class="subtle-check w-5 h-5 accent-red-500">
+                                <label for="sitting_time" class="text-xs text-gray-300">Siedzę powyżej 8h dziennie</label>
+                            </div>
+
+                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
+                                <input type="checkbox" id="screen_before_sleep" class="subtle-check w-5 h-5 accent-red-500">
+                                <label for="screen_before_sleep" class="text-xs text-gray-300">Używam ekranów tuż przed snem</label>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 pb-8">
+                            <button type="button" onclick="nextStep(5)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm">Wstecz</button>
+                            <button type="button" id="calculateBtn" onclick="sendData()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg shadow-lg uppercase text-sm tracking-widest">OBLICZ WYNIK KOŃCOWY</button>
+                        </div>
+                    </div>
+
+                        <div id="resultBox" class="hidden mt-10 p-6 bg-gray-900 border-2 border-emerald-500 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            <h2 class="text-3xl font-black text-center text-emerald-400 mb-6 uppercase tracking-tighter">Twoja Przewidywana Długość Życia</h2>
+                            
+                            <div class="text-center mb-8">
+                                <span id="finalAge" class="text-7xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"></span>
+                                <span class="text-2xl font-bold text-emerald-500 ml-2">lat</span>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-300">
+                                    <thead class="text-xs uppercase bg-gray-800 text-emerald-400">
+                                        <tr>
+                                            <th class="px-4 py-3 rounded-tl-lg">Kategoria</th>
+                                            <th class="px-4 py-3 text-right rounded-tr-lg">Wpływ (w latach)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resultsTableBody" class="divide-y divide-gray-800">
+                                        </tbody>
+                                    <tfoot>
+                                        <tr class="bg-gray-800/50 font-bold text-white">
+                                            <td class="px-4 py-3">Twoje BMI</td>
+                                            <td id="bmiValue" class="px-4 py-3 text-right text-emerald-400"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <button onclick="window.location.reload()" class="w-full mt-8 py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-lg transition-all border border-gray-600 uppercase text-xs tracking-widest">
+                                Spróbuj ponownie
+                            </button>
+                        </div>
+
+                <script>
+
+/**
+ * Zarządzanie krokami formularza
+ */
+function nextStep(stepNumber) {
+    // Ukryj wszystkie sekcje kroków
+    document.querySelectorAll('.step-section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    // Pokaż wybraną sekcję
+    const targetStep = document.getElementById('step' + stepNumber);
+    if (targetStep) {
+        targetStep.classList.remove('hidden');
+    }
+    
+    // Przewiń na górę strony
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/**
+ * Mapowanie technicznych kluczy z serwera na czytelne nazwy w tabeli
+ */
+const labelMap = {
+    "genetics_total_impact": "Genetyka i obciążenia rodzinne",
+    "bmi_impact": "Wskaźnik masy ciała (BMI)",
+    "nicotine_impact": "Używki: Nikotyna",
+    "alcohol_impact": "Używki: Alkohol",
+    "activity_impact": "Aktywność fizyczna",
+    "occ_impact": "Praca i stres zawodowy",
+    "sleep_impact": "Jakość i długość snu",
+    "relations_impact": "Relacje społeczne",
+    "environment_impact": "Środowisko i smog",
+    "nutrition_impact": "Dieta i nawyki żywieniowe",
+    "stimulants_impact": "Kofeina i energetyki",
+    "subtle_factors_impact": "Czynniki subtelne i styl życia"
+};
+
+/**
+ * Główna funkcja wysyłająca dane i obsługująca wynik
+ */
+async function sendData() {
+    console.log("Inicjacja obliczeń...");
+
+    const btn = document.getElementById('calculateBtn');
+    const resultBox = document.getElementById('resultBox');
+    const resultsTableBody = document.getElementById('resultsTableBody');
+    const finalAgeSpan = document.getElementById('finalAge');
+    const bmiValueSpan = document.getElementById('bmiValue');
+
+    // Blokada przycisku
+    btn.innerText = "LICZĘ...";
+    btn.disabled = true;
+
+    try {
+        // Zbieranie zaznaczonych opcji subtelnych (Krok 6)
+        const subtleChoices = [];
+        document.querySelectorAll('.subtle-check:checked').forEach(checkbox => {
+            subtleChoices.push(checkbox.id);
+        });
+
+        // Budowa obiektu Payload
+        const payload = {
+            // KROK 1: Biologia
+            age: parseFloat(document.getElementById('age').value),
+            gender: document.getElementById('gender').value,
+            weight: parseFloat(document.getElementById('weight').value),
+            height: parseFloat(document.getElementById('height').value),
+            ancestors_choice: document.getElementById('ancestors_choice').value,
+            diseases_choice: document.getElementById('diseases_choice').value,
+
+            // KROK 2: Nikotyna
+            cig_per_day: parseFloat(document.getElementById('cig_per_day')?.value) || 0,
+            cig_years: parseFloat(document.getElementById('cig_years')?.value) || 0,
+            cig_active: document.getElementById('cig_active')?.value === "true",
+            cig_quit_age: parseFloat(document.getElementById('cig_quit_age')?.value) || 0,
+            vape_years: parseFloat(document.getElementById('vape_years')?.value) || 0,
+            vape_active: document.getElementById('vape_active')?.value === "true",
+            vape_quit_age: parseFloat(document.getElementById('vape_quit_age')?.value) || 0,
+            stick_per_day: parseFloat(document.getElementById('stick_per_day')?.value) || 0,
+            heat_years: parseFloat(document.getElementById('heat_years')?.value) || 0,
+            heat_active: document.getElementById('heat_active')?.value === "true",
+            heat_quit_age: parseFloat(document.getElementById('heat_quit_age')?.value) || 0,
+
+            // KROK 2: Alkohol
+            beer_quantity: parseFloat(document.getElementById('beer_quantity')?.value) || 0,
+            wine_quantity: parseFloat(document.getElementById('wine_quantity')?.value) || 0,
+            vodka_quantity: parseFloat(document.getElementById('vodka_quantity')?.value) || 0,
+            alcohol_50_quantity: parseFloat(document.getElementById('alcohol_50_quantity')?.value) || 0,
+            alcohol_75_quantity: parseFloat(document.getElementById('alcohol_75_quantity')?.value) || 0,
+            binge_drinking: document.getElementById('binge_drinking')?.checked || false,
+
+            // KROK 3: Aktywność i Praca
+            year_activity: parseFloat(document.getElementById('year_activity')?.value) || 0,
+            current_level: document.getElementById('current_level')?.value,
+            occ_key: document.getElementById('occ_key')?.value,
+            stress_modifier: parseFloat(document.getElementById('stress_modifier')?.value) || 0,
+
+            // KROK 4: Środowisko i Sen
+            sleep_key: document.getElementById('sleep_key').value,
+            relation_keys: document.getElementById('relation_keys').value,
+            years_in_smog: parseFloat(document.getElementById('years_in_smog').value) || 0,
+            environment_air_key: document.getElementById('environment_air_key').value,
+            environment_noise_key: document.getElementById('environment_noise_key').value,
+
+            // KROK 5: Dieta
+            diet_choice: document.getElementById('diet_choice').value,
+            sugar_addiction: document.getElementById('sugar_addiction').checked,
+            low_hydration: document.getElementById('low_hydration').checked,
+            years_history_input: parseFloat(document.getElementById('years_history_input').value) || 0,
+            stimulants_choice: document.getElementById('stimulants_choice').value,
+            stimulants_dosages: document.getElementById('stimulants_dosages').value,
+
+            // KROK 6: Czynniki subtelne
+            subtle_choices: subtleChoices
+        };
+
+        console.log("Wysyłanie payload:", payload);
+
+        const response = await fetch('/calculate_all', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        console.log("Odebrano wynik:", result);
+
+        if (result.status === "success") {
+            // 1. Wyświetlenie wieku końcowego i BMI
+            finalAgeSpan.innerText = result.predicted_age.toFixed(1);
+            if(bmiValueSpan) bmiValueSpan.innerText = result.bmi.toFixed(1);
+
+            // 2. Generowanie wierszy tabeli szczegółowej
+            resultsTableBody.innerHTML = ''; // Czyszczenie starej tabeli
+            
+            Object.keys(labelMap).forEach(key => {
+                if (result[key] !== undefined) {
+                    const impact = result[key];
+                    const colorClass = impact >= 0 ? 'text-emerald-400' : 'text-red-400';
+                    const sign = impact > 0 ? '+' : '';
+                    
+                    const row = `
+                        <tr class="border-b border-gray-800 hover:bg-gray-800/30 transition-colors">
+                            <td class="px-4 py-3 text-gray-400">${labelMap[key]}</td>
+                            <td class="px-4 py-3 text-right font-bold ${colorClass}">${sign}${impact.toFixed(2)} lat</td>
+                        </tr>
+                    `;
+                    resultsTableBody.innerHTML += row;
+                }
+            });
+
+            // 3. Pokazanie kontenera i scroll do niego
+            resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
+
+        } else {
+            alert("Błąd serwera: " + (result.message || "Nieznany błąd"));
+        }
+
+    } catch (error) {
+        console.error("Błąd krytyczny JS:", error);
+        alert("Wystąpił problem z połączeniem. Upewnij się, że serwer Flask działa.");
+    } finally {
+        btn.innerText = "OBLICZ WYNIK";
+        btn.disabled = false;
+    }
+}
+    </script>
+</body>
+</html>

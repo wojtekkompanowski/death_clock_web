@@ -1,0 +1,36 @@
+{
+  "caffeine_data": {
+    "sources": {
+      "coffee_only": {
+        "name": "Tylko kawa / herbata",
+        "hr_modifier": -0.04
+      },
+      "energy_only": {
+        "name": "Tylko napoje energetyczne",
+        "hr_modifier": 0.08
+      },
+      "mixed": {
+        "name": "Mieszane (kawa i energetyki)",
+        "hr_modifier": 0.05
+      },
+      "none": {
+        "name": "Brak kofeiny",
+        "hr_modifier": 0.0
+      }
+    },
+    "dosages": {
+      "low": {
+        "name": "Małe ilości (1 porcja dziennie)",
+        "multiplier": 0.5
+      },
+      "moderate": {
+        "name": "Umiarkowane (2-3 porcje dziennie)",
+        "multiplier": 1.0
+      },
+      "high": {
+        "name": "Duże (4+ porcje dziennie / drżenie rąk)",
+        "multiplier": 2.2
+      }
+    }
+  }
+}

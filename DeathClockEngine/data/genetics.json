@@ -1,0 +1,32 @@
+{
+  "genetics_data": {
+    "ancestors_longevity": {
+      "exceptional": {
+        "name": "Wyjątkowa (większość dziadków/rodziców 90+)",
+        "impact_years": 5.0
+      },
+      "good": {
+        "name": "Dobra (przynajmniej dwoje przodków 85+)",
+        "impact_years": 2.5
+      },
+      "standard": {
+        "name": "Przeciętna (większość przodków dożyła 70-80 lat)",
+        "impact_years": 0.0
+      }
+    },
+    "hereditary_risks": {
+      "high_risk": {
+        "name": "Wysokie obciążenie (zawały/nowotwory w rodzinie przed 50-tką)",
+        "impact_years": -4.5
+      },
+      "moderate_risk": {
+        "name": "Umiarkowane (choroby przewlekłe w rodzinie, np. cukrzyca)",
+        "impact_years": -1.5
+      },
+      "no_risk": {
+        "name": "Brak znanych obciążeń przedwczesnych",
+        "impact_years": 0.0
+      }
+    }
+  }
+}

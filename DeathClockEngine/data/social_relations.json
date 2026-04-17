@@ -1,0 +1,19 @@
+{
+"social_relations": {
+  "isolated": {
+    "key": "isolated",
+    "description": "Izolacja (brak bliskich osób, rzadki kontakt z ludźmi)",
+    "hr": 1.25
+  },
+  "average": {
+    "key": "average",
+    "description": "Przeciętne (kilku znajomych, kontakt z rodziną, ale bez głębokich więzi)",
+    "hr": 1.05
+  },
+  "strong": {
+    "key": "strong",
+    "description": "Silne (poczucie wspólnoty, kochająca rodzina, krąg wiernych przyjaciół)",
+    "hr": 0.85
+  }
+}
+}

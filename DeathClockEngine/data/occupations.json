@@ -1,0 +1,105 @@
+{
+  "occupations": {
+
+    "software_engineer": { "name": "Programista", "stress_hr": 1.08, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "frontend_dev": { "name": "Frontend Developer", "stress_hr": 1.07, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "backend_dev": { "name": "Backend Developer", "stress_hr": 1.09, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "fullstack_dev": { "name": "Fullstack Developer", "stress_hr": 1.10, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "devops": { "name": "DevOps Engineer", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.02 },
+    "data_scientist": { "name": "Data Scientist", "stress_hr": 1.07, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "data_analyst": { "name": "Analityk danych", "stress_hr": 1.08, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "cybersecurity": { "name": "Specjalista cyberbezpieczeństwa", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.05 },
+    "qa_tester": { "name": "Tester oprogramowania", "stress_hr": 1.06, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "it_support": { "name": "Wsparcie IT", "stress_hr": 1.12, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "doctor": { "name": "Lekarz", "stress_hr": 1.28, "physical_intensity": "medium", "environment_hazard": 1.10 },
+    "surgeon": { "name": "Chirurg", "stress_hr": 1.32, "physical_intensity": "medium", "environment_hazard": 1.15 },
+    "anesthesiologist": { "name": "Anestezjolog", "stress_hr": 1.30, "physical_intensity": "medium", "environment_hazard": 1.15 },
+    "nurse": { "name": "Pielęgniarka", "stress_hr": 1.25, "physical_intensity": "high", "environment_hazard": 1.10 },
+    "paramedic": { "name": "Ratownik medyczny", "stress_hr": 1.30, "physical_intensity": "high", "environment_hazard": 1.20 },
+    "pharmacist": { "name": "Farmaceuta", "stress_hr": 1.10, "physical_intensity": "low", "environment_hazard": 1.02 },
+    "dentist": { "name": "Dentysta", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.05 },
+    "physiotherapist": { "name": "Fizjoterapeuta", "stress_hr": 1.15, "physical_intensity": "medium", "environment_hazard": 1.05 },
+
+    "teacher": { "name": "Nauczyciel", "stress_hr": 1.22, "physical_intensity": "medium", "environment_hazard": 1.02 },
+    "kindergarten_teacher": { "name": "Przedszkolanka", "stress_hr": 1.20, "physical_intensity": "high", "environment_hazard": 1.02 },
+    "professor": { "name": "Wykładowca", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "police": { "name": "Policjant", "stress_hr": 1.30, "physical_intensity": "medium", "environment_hazard": 1.20 },
+    "detective": { "name": "Detektyw", "stress_hr": 1.22, "physical_intensity": "medium", "environment_hazard": 1.10 },
+    "firefighter": { "name": "Strażak", "stress_hr": 1.32, "physical_intensity": "high", "environment_hazard": 1.30 },
+    "soldier": { "name": "Żołnierz", "stress_hr": 1.35, "physical_intensity": "high", "environment_hazard": 1.35 },
+    "security_guard": { "name": "Ochroniarz", "stress_hr": 1.15, "physical_intensity": "medium", "environment_hazard": 1.10 },
+
+    "construction_worker": { "name": "Budowlaniec", "stress_hr": 1.15, "physical_intensity": "high", "environment_hazard": 1.30 },
+    "electrician": { "name": "Elektryk", "stress_hr": 1.12, "physical_intensity": "medium", "environment_hazard": 1.25 },
+    "plumber": { "name": "Hydraulik", "stress_hr": 1.10, "physical_intensity": "high", "environment_hazard": 1.15 },
+    "welder": { "name": "Spawacz", "stress_hr": 1.12, "physical_intensity": "high", "environment_hazard": 1.30 },
+    "carpenter": { "name": "Stolarz", "stress_hr": 1.10, "physical_intensity": "high", "environment_hazard": 1.15 },
+    "bricklayer": { "name": "Murarz", "stress_hr": 1.12, "physical_intensity": "high", "environment_hazard": 1.25 },
+    "roofer": { "name": "Dekarz", "stress_hr": 1.15, "physical_intensity": "high", "environment_hazard": 1.30 },
+    "miner": { "name": "Górnik", "stress_hr": 1.20, "physical_intensity": "high", "environment_hazard": 1.45 },
+
+    "factory_worker": { "name": "Pracownik fabryki", "stress_hr": 1.12, "physical_intensity": "high", "environment_hazard": 1.20 },
+    "machine_operator": { "name": "Operator maszyn", "stress_hr": 1.12, "physical_intensity": "high", "environment_hazard": 1.20 },
+    "warehouse_worker": { "name": "Magazynier", "stress_hr": 1.10, "physical_intensity": "high", "environment_hazard": 1.15 },
+    "forklift_operator": { "name": "Operator wózka widłowego", "stress_hr": 1.10, "physical_intensity": "medium", "environment_hazard": 1.15 },
+
+    "truck_driver": { "name": "Kierowca TIR", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.20 },
+    "bus_driver": { "name": "Kierowca autobusu", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.15 },
+    "taxi_driver": { "name": "Taksówkarz", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.10 },
+    "courier": { "name": "Kurier", "stress_hr": 1.15, "physical_intensity": "medium", "environment_hazard": 1.12 },
+
+    "pilot": { "name": "Pilot", "stress_hr": 1.30, "physical_intensity": "low", "environment_hazard": 1.25 },
+    "flight_attendant": { "name": "Stewardessa", "stress_hr": 1.20, "physical_intensity": "medium", "environment_hazard": 1.15 },
+    "air_traffic_controller": { "name": "Kontroler lotów", "stress_hr": 1.35, "physical_intensity": "low", "environment_hazard": 1.20 },
+
+    "lawyer": { "name": "Prawnik", "stress_hr": 1.22, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "judge": { "name": "Sędzia", "stress_hr": 1.25, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "prosecutor": { "name": "Prokurator", "stress_hr": 1.25, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "accountant": { "name": "Księgowy", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "auditor": { "name": "Audytor", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "banker": { "name": "Bankowiec", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "retail_worker": { "name": "Sprzedawca", "stress_hr": 1.18, "physical_intensity": "medium", "environment_hazard": 1.0 },
+    "cashier": { "name": "Kasjer", "stress_hr": 1.12, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "store_manager": { "name": "Kierownik sklepu", "stress_hr": 1.22, "physical_intensity": "medium", "environment_hazard": 1.0 },
+    "call_center": { "name": "Call center", "stress_hr": 1.25, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "chef": { "name": "Kucharz", "stress_hr": 1.25, "physical_intensity": "high", "environment_hazard": 1.10 },
+    "waiter": { "name": "Kelner", "stress_hr": 1.18, "physical_intensity": "medium", "environment_hazard": 1.05 },
+    "bartender": { "name": "Barman", "stress_hr": 1.20, "physical_intensity": "medium", "environment_hazard": 1.05 },
+
+    "cleaner": { "name": "Sprzątacz", "stress_hr": 1.05, "physical_intensity": "medium", "environment_hazard": 1.05 },
+    "janitor": { "name": "Woźny", "stress_hr": 1.04, "physical_intensity": "medium", "environment_hazard": 1.05 },
+
+    "psychologist": { "name": "Psycholog", "stress_hr": 1.20, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "psychiatrist": { "name": "Psychiatra", "stress_hr": 1.25, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "social_worker": { "name": "Pracownik socjalny", "stress_hr": 1.25, "physical_intensity": "medium", "environment_hazard": 1.05 },
+
+    "journalist": { "name": "Dziennikarz", "stress_hr": 1.20, "physical_intensity": "low", "environment_hazard": 1.05 },
+    "editor": { "name": "Redaktor", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "photographer": { "name": "Fotograf", "stress_hr": 1.12, "physical_intensity": "medium", "environment_hazard": 1.0 },
+
+    "architect": { "name": "Architekt", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "civil_engineer": { "name": "Inżynier budownictwa", "stress_hr": 1.20, "physical_intensity": "medium", "environment_hazard": 1.15 },
+    "mechanical_engineer": { "name": "Inżynier mechanik", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.05 },
+
+    "biologist": { "name": "Biolog", "stress_hr": 1.05, "physical_intensity": "low", "environment_hazard": 1.05 },
+    "chemist": { "name": "Chemik", "stress_hr": 1.10, "physical_intensity": "low", "environment_hazard": 1.10 },
+    "physicist": { "name": "Fizyk", "stress_hr": 1.05, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "farmer": { "name": "Rolnik", "stress_hr": 1.12, "physical_intensity": "high", "environment_hazard": 1.15 },
+    "gardener": { "name": "Ogrodnik", "stress_hr": 1.08, "physical_intensity": "medium", "environment_hazard": 1.05 },
+
+    "ux_designer": { "name": "UX Designer", "stress_hr": 1.12, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "graphic_designer": { "name": "Grafik", "stress_hr": 1.10, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "game_dev": { "name": "Game developer", "stress_hr": 1.18, "physical_intensity": "low", "environment_hazard": 1.0 },
+
+    "hr": { "name": "HR", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "recruiter": { "name": "Rekruter", "stress_hr": 1.15, "physical_intensity": "low", "environment_hazard": 1.0 },
+    "manager": { "name": "Manager", "stress_hr": 1.25, "physical_intensity": "low", "environment_hazard": 1.0 }
+
+  }
+}

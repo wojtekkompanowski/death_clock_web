@@ -1,0 +1,54 @@
+{
+  "metadata": "BMI Hazard Ratio based on Global Health Studies (The Lancet/WHO)",
+  "ranges": [
+    {
+      "label": "Severe Underweight",
+      "min_bmi": 0,
+      "max_bmi": 16.0,
+      "male_hr": 1.80,
+      "female_hr": 1.70
+    },
+    {
+      "label": "Underweight",
+      "min_bmi": 16.0,
+      "max_bmi": 18.5,
+      "male_hr": 1.30,
+      "female_hr": 1.25
+    },
+    {
+      "label": "Healthy Weight",
+      "min_bmi": 18.5,
+      "max_bmi": 25.0,
+      "male_hr": 1.00,
+      "female_hr": 1.00
+    },
+    {
+      "label": "Overweight",
+      "min_bmi": 25.0,
+      "max_bmi": 30.0,
+      "male_hr": 1.07,
+      "female_hr": 1.05
+    },
+    {
+      "label": "Obese Class I",
+      "min_bmi": 30.0,
+      "max_bmi": 35.0,
+      "male_hr": 1.25,
+      "female_hr": 1.20
+    },
+    {
+      "label": "Obese Class II",
+      "min_bmi": 35.0,
+      "max_bmi": 40.0,
+      "male_hr": 1.60,
+      "female_hr": 1.55
+    },
+    {
+      "label": "Morbidly Obese",
+      "min_bmi": 40.0,
+      "max_bmi": 100.0,
+      "male_hr": 2.10,
+      "female_hr": 2.00
+    }
+  ]
+}

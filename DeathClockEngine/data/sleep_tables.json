@@ -1,0 +1,24 @@
+{
+"sleep_health": {
+  "short_sleep": {
+    "key": "less_6",
+    "description": "Poniżej 6 godzin (Deprywacja)",
+    "hr": 1.15
+  },
+  "borderline_sleep": {
+    "key": "6_to_7",
+    "description": "6 - 7 godzin (Lekki niedobór)",
+    "hr": 1.05
+  },
+  "optimal_sleep": {
+    "key": "7_to_8",
+    "description": "7 - 8 godzin (Złoty standard)",
+    "hr": 1.0
+  },
+  "long_sleep": {
+    "key": "more_9",
+    "description": "Powyżej 9 godzin (Nadmiar)",
+    "hr": 1.12
+  }
+ }
+}

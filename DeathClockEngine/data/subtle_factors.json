@@ -1,0 +1,48 @@
+{
+  "subtle_data": {
+    "life_purpose": {
+      "name": "Czy masz w życiu pasję lub jasny cel, który daje Ci motywację?",
+      "impact": 3.5
+    },
+    "dental_hygiene": {
+      "name": "Czy codziennie nitkujesz zęby lub używasz irygatora?",
+      "impact": 1.5
+    },
+    "noise_pollution": {
+      "name": "Czy sypiasz w hałasie (np. okna na głośną ulicę)?",
+      "impact": -2.0
+    },
+    "fast_walking": {
+      "name": "Czy Twoje naturalne tempo marszu jest szybkie?",
+      "impact": 2.5
+    },
+    "optimism": {
+      "name": "Czy uważasz się za optymistę i rzadko rozpamiętujesz porażki?",
+      "impact": 3.0
+    },
+    "lifelong_learning": {
+      "name": "Czy regularnie uczysz się nowych rzeczy (języki, instrumenty, kursy)?",
+      "impact": 2.0
+    },
+    "sitting_time": {
+      "name": "Czy spędzasz w pozycji siedzącej więcej niż 8h dziennie (bez przerw)?",
+      "impact": -3.5
+    },
+    "thermal_hormesis": {
+      "name": "Czy regularnie stosujesz saunę lub zimne prysznice/morsowanie?",
+      "impact": 2.0
+    },
+    "pet_ownership": {
+      "name": "Czy posiadasz psa lub inne zwierzę domowe (wymuszające interakcję)?",
+      "impact": 1.5
+    },
+    "air_quality": {
+      "name": "Czy w Twoim domu/pracy używasz oczyszczacza powietrza (lub żyjesz w czystym regionie)?",
+      "impact": 1.5
+    },
+    "screen_before_sleep": {
+      "name": "Czy używasz telefonu/komputera w łóżku tuż przed snem?",
+      "impact": -1.5
+    }
+  }
+}

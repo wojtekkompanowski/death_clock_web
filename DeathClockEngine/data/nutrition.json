@@ -1,0 +1,43 @@
+{
+  "nutrition_data": {
+    "diet_patterns": {
+      "ultra_processed": {
+        "name": "Dieta wysokoprzetworzona (Fast-food, gotowe dania, mało błonnika)",
+        "hr": 1.25,
+        "description": "Wysokie ryzyko stanów zapalnych i chorób układu krążenia."
+      },
+      "standard_western": {
+        "name": "Dieta zachodnia (Domowe jedzenie, sporo mięsa i węglowodanów, mało warzyw)",
+        "hr": 1.08,
+        "description": "Przeciętne ryzyko, typowe dla nowoczesnych społeczeństw."
+      },
+      "balanced": {
+        "name": "Dieta zbilansowana (Dużo warzyw, ograniczone mięso i cukier)",
+        "hr": 0.92,
+        "description": "Działa ochronnie na organizm, spowalnia starzenie."
+      },
+      "longevity_diet": {
+        "name": "Dieta długowieczności (Śródziemnomorska/Okinawa - ryby, oliwa, strączki, orzechy)",
+        "hr": 0.82,
+        "description": "Złoty standard; drastycznie obniża ryzyko zgonu z przyczyn sercowych."
+      }
+    },
+    "addictions_and_habits": {
+      "sugar_addiction": {
+        "name": "Nadmiar cukru (Słodycze, napoje gazowane codziennie)",
+        "hr_extra": 0.10,
+        "description": "Cukier przyspiesza glikację białek (starzenie się tkanek)."
+      },
+      "insufficient_hydration": {
+        "name": "Słabe nawodnienie (Poniżej 1.5L wody dziennie)",
+        "impact_years": -1.5,
+        "description": "Obciążenie dla nerek i gorsza regeneracja komórkowa."
+      }
+    },
+    "history": {
+      "poor_nutrition_decade_penalty": 0.6,
+      "max_history_penalty": 3.5,
+      "description": "Kara w latach za każdą dekadę złego odżywiania w przeszłości."
+    }
+  }
+}
