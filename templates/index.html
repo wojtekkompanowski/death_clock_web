@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator Śmierci - Test</title>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -11,9 +14,50 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #34d399; }
         .step-section { transition: opacity 0.3s ease; }
+        .tippy-box {
+        background-color: #111827; /* Dark gray / Navy */
+        border: 1px solid #10b981; /* Emerald border */
+        color: white;
+        font-size: 11px;
+        border-radius: 6px;
+        padding: 4px;
+        }
+
+        .tippy-arrow {
+            color: #111827; /* Kolor strzałki taki sam jak tła */
+        }
+        .text-gray-400 {
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity, 1));
+        label {
+    font-family: 'Inter', sans-serif; /* Wybierz swoją czcionkę */
+    text-transform: uppercase;      /* Wymusza WIELKIE LITERY wszędzie */
+    letter-spacing: 0.05em;         /* Lekki odstęp między literami (wygląda pro) */
+    font-size: 10px !important;     /* Identyczna, mała wielkość dla każdego podpisu */
+    font-weight: 700;               /* Pogrubienie */
+    color: #9ca3af !important;      /* Kolor szary (gray-400) */
+}
+
+/* 2. Ujednolicenie wszystkich pól wpisywania (Input i Select) */
+input, select {
+    font-size: 14px !important;     /* Taka sama wielkość tekstu wewnątrz pól */
+    font-family: inherit;
+    background-color: #374151 !important; /* bg-gray-700 - spójny kolor tła */
+    border-radius: 8px !important;
+}
+
+/* 3. Ujednolicenie nagłówków kroków (H2) */
+h2 {
+    font-size: 1.25rem !important;
+    text-transform: none;           /* Nagłówki mogą zostać normalne */
+    letter-spacing: normal;
+}
+
+
+
     </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4 font-sans">
 
     <div class="max-w-2xl w-full bg-gray-800 rounded-xl shadow-2xl border border-gray-700 flex flex-col overflow-hidden">
         
@@ -21,100 +65,265 @@
             <h1 class="text-2xl font-bold text-emerald-400">Kalkulator Przewidywanej Długości Życia</h1>
         </div>
 
-        <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar" style="max-height: 75vh;">
+        <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar" style="max-height: 90vh;">
             
             <div id="step1" class="step-section space-y-6">
-                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 1: Podstawy</h2>
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 1: Podstawy</h2>
+                
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1 uppercase">Wiek</label>
-                        <input type="number" id="age" value="25" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600 focus:border-emerald-500">
+                        <div class="flex items-center gap-2 mb-1">
+                            <label>Wiek</label>
+                            <span data-tippy-content="Podaj swój obecny wiek. Jest to baza do obliczeń statystycznej długości życia i punkt odniesienia dla Twojego wieku biologicznego." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <input type="number" id="age" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="np. 25">
                     </div>
+
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1 uppercase">Płeć</label>
-                        <select id="gender" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600 focus:border-emerald-500">
+                        <div class="flex items-center gap-2 mb-1">
+                        <label>Płeć</label>
+                        <span data-tippy-content="Płeć biologiczna determinuje różnice w gospodarce hormonalnej i tempie starzenia się komórek. Statystycznie kobiety mają wyższą bazową długość życia." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <select id="gender" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
                             <option value="mężczyzna">Mężczyzna</option>
                             <option value="kobieta">Kobieta</option>
                         </select>
                     </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1 uppercase">Waga (kg)</label>
-                        <input type="number" id="weight" value="80" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1 uppercase">Wzrost (cm)</label>
-                        <input type="number" id="height" value="180" class="w-full bg-gray-700 rounded p-2 outline-none border border-gray-600">
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <label class="block text-xs text-gray-400 font-bold uppercase tracking-widest border-l-2 border-emerald-500 pl-2">Genetyka</label>
-                    <select id="ancestors_choice" class="w-full bg-gray-700 rounded p-2 text-sm border border-gray-600 mb-3">
-                        <option value="standard">Przeciętna długowieczność przodków</option>
-                        <option value="good">Dobra (85+)</option>
-                        <option value="exceptional">Wyjątkowa (90+)</option>
-                    </select>
-                    <select id="diseases_choice" class="w-full bg-gray-700 rounded p-2 text-sm border border-gray-600">
-                        <option value="no_risk">Brak obciążeń dziedzicznych</option>
-                        <option value="moderate_risk">Umiarkowane ryzyko (np. cukrzyca)</option>
-                        <option value="high_risk">Wysokie ryzyko (choroby przed 50-tką)</option>
-                    </select>
-                </div>
-                <button onclick="nextStep(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-4 rounded-lg mt-4 uppercase tracking-widest">Dalej: Używki →</button>
-            </div>
 
-            <div id="step2" class="step-section hidden space-y-6">
-                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 2: Używki</h2>
-                
-                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Nikotyna</h3>
-                    <div class="grid grid-cols-2 gap-4 items-end">
-                        <div><label class="block text-[10px] text-gray-400 uppercase">Papierosy/dzień</label><input type="number" id="cig_per_day" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
-                        <div><label class="block text-[10px] text-gray-400 uppercase">Lata palenia</label><input type="number" id="cig_years" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                        <label class=>Waga (kg)</label>
+                        <span data-tippy-content="Masa ciała pozwala oszacować poziom otłuszczenia narządów wewnętrznych. Nadwaga jest czynnikiem ryzyka dla serca, natomiast niedowaga może osłabiać układ odpornościowy." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <input type="number" id="weight" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="np. 60">
                     </div>
-                    <div class="grid grid-cols-2 gap-4 items-end">
-                        <div><select id="cig_active" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"><option value="false">Rzuciłem/Nie palę</option><option value="true">Palę obecnie</option></select></div>
-                        <div><label class="block text-[10px] text-gray-400">Wiek rzucenia (0=n/d)</label><input type="number" id="cig_quit_age" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600"></div>
+
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                        <label>Wzrost (cm)</label>
+                        <span data-tippy-content="Wzrost jest niezbędny do obliczenia wskaźnika proporcji masy ciała (BMI). Pozwala on ustalić, czy Twoja waga jest optymalna dla Twojego układu kostnego i serca." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <input type="number" id="height" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="np. 170">
                     </div>
-                    <div class="border-t border-gray-700 pt-4">
-                        <p class="text-[10px] text-gray-500 uppercase mb-2">Vape i Podgrzewacze</p>
-                        <div class="grid grid-cols-3 gap-2 items-end">
-                            <input type="number" id="vape_years" placeholder="Vape lata" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
-                            <select id="vape_active" class="bg-gray-700 p-2 rounded text-sm border border-gray-600"><option value="false">Vape: Nie</option><option value="true">Vape: Tak</option></select>
-                            <input type="number" id="vape_quit_age" placeholder="Wiek rz." class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                </div>
+
+                <div class="space-y-6 pt-4">
+                    <div class="flex items-center gap-2 border-l-2 border-emerald-500 pl-2">
+                        <label class="block text-xs text-gray-400 font-bold uppercase tracking-widest">Genetyka</label>
+                        <span data-tippy-content="Genetyka odpowiada za ok. 20-30% tempa starzenia się organizmu. Pozostałe 70% to Twój styl życia." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <label>Długowieczność w rodzinie</label>
+                                <span data-tippy-content="Historia Twojej rodziny pozwala oszacować potencjał regeneracyjny Twoich komórek. Obecność stulatków często wiąże się z genami sprawniej naprawiającymi DNA." class="cursor-help text-emerald-500 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
+                            </div>
+                            <select id="ancestors_choice" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                                <option value="standard">Przeciętna długowieczność przodków</option>
+                                <option value="good">Dobra (85+)</option>
+                                <option value="exceptional">Wyjątkowa (90+)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <label>Ryzyko chorób dziedzicznych</label>
+                                <span data-tippy-content="Wskazanie chorób u bliskich krewnych pozwala ocenić ryzyko genetyczne. Wiele schorzeń cywilizacyjnych można zneutralizować profilaktyką." class="cursor-help text-emerald-500 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
+                            </div>
+                            <select id="diseases_choice" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                                <option value="no_risk">Brak obciążeń dziedzicznych</option>
+                                <option value="moderate_risk">Umiarkowane ryzyko (np. cukrzyca)</option>
+                                <option value="high_risk">Wysokie ryzyko (choroby przed 50-tką)</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
+    <button onclick="nextStep(2)" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg mt-6 uppercase tracking-widest shadow-lg transition-all transform hover:scale-[1.01] active:scale-95">
+        Dalej: Używki →
+    </button>
+</div>
+
+            <div id="step2" class="step-section hidden space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 2: Używki</h2>
+                
                 <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Alkohol (tygodniowo)</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2 mb-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase">Tradycyjne Papierosy</h3>
+                            <span data-tippy-content="Klasyczne wyroby tytoniowe zawierają ponad 7000 substancji chemicznych, w tym dziesiątki rakotwórczych substancji smolistych. Są główną przyczyną skrócenia telomerów i przyspieszenia wieku biologicznego płuc oraz serca." 
+                                  class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 16v-4"></path>
+                                    <path d="M12 8h.01"></path>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 items-end">
+                            <div>
+                                <label>Papierosy/dzień</label>
+                                <input type="number" id="cig_per_day" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                            </div>
+                            <div>
+                                <label>Lata palenia</label>
+                                <input type="number" id="cig_years"  class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 items-end">
+                            <div>
+                                <label>Status</label>
+                                <select id="cig_active" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
+                                    <option value="false">Rzuciłem/Nie palę</option>
+                                    <option value="true">Palę obecnie</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Wiek rzucenia</label>
+                                <input type="number" id="cig_quit_age" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="0 jeśli rzuciłeś/aś">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-700 pt-4 space-y-2">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-emerald-500 font-bold text-sm uppercase">Podgrzewacze (np. IQOS)</h3>
+                            <span data-tippy-content="Podgrzewacze tytoniu dostarczają nikotynę poprzez podgrzewanie wkładów. Choć generują mniej substancji smolistych, nikotyna nadal wpływa na serce." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 items-end">
+                            <div>
+                                <label>Wkłady/dzień</label>
+                                <input type="number" id="stick_per_day" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                            </div>
+                            <div>
+                                <label>Lata używania</label>
+                                <input type="number" id="heat_years" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 items-end">
+                            <div>
+                                <label>Status</label>
+                                <select id="heat_active" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
+                                    <option value="false">Nie używam</option>
+                                    <option value="true">Używam</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Wiek rzucenia</label>
+                                <input type="number" id="heat_quit_age" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-2 px-3 text-white focus:outline-none focus:border-emerald-500 transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-700 pt-4 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-emerald-500 font-bold text-sm uppercase">E-papierosy (Vape)</h3>
+                            <span data-tippy-content="Vaping dostarcza nikotynę w formie aerozolu. Choć eliminuje substancje smoliste, nikotyna wciąż negatywnie wpływa na elastyczność naczyń krwionośnych i ciśnienie." class="cursor-help text-emerald-500 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-1">
+                                <label>Lata</label>
+                                <input type="number" id="vape_years" 
+                                       class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 transition-all text-white">
+                            </div>
+
+                            <div class="space-y-1">
+                                <label>Status</label>
+                                <select id="vape_active" 
+                                        class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 transition-all text-white">
+                                    <option value="false">Nie używam</option>
+                                    <option value="true">Używam</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label>Wiek rz.</label>
+                                <input type="number" id="vape_quit_age"
+                                       class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 transition-all text-white">
+                            </div>
+                        </div>
+                    </div>
+
+                
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase">Alkohol (tygodniowo)</h3>
+                        <span data-tippy-content="Nadmiar alkoholu obciąża wątrobę i układ nerwowy. Podaj średnią ilość z typowego tygodnia." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
                     <div class="grid grid-cols-3 gap-2">
-                        <input type="number" id="beer_quantity" placeholder="Piwo" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
-                        <input type="number" id="wine_quantity" placeholder="Wino" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
-                        <input type="number" id="vodka_quantity" placeholder="Wódka" class="bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        <div>
+                            <label>Piwo (0.5l)</label>
+                            <input type="number" id="beer_quantity" placeholder="Szt." class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label>Wino (kiel. 150ml)</label>
+                            <input type="number" id="wine_quantity" placeholder="Szt." class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label>Wódka (50ml)</label>
+                            <input type="number" id="vodka_quantity" placeholder="Szt." class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label>Alk. 50%</label>
+                            <input type="number" id="alcohol_50_quantity" placeholder="Szt." class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label>Alk. 75%+</label>
+                            <input type="number" id="alcohol_75_quantity" placeholder="Szt." class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 outline-none focus:border-emerald-500">
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex gap-4">
-                    <button onclick="nextStep(1)" class="w-1/3 bg-gray-700 py-4 rounded-lg uppercase text-sm">Wstecz</button>
-                    <button onclick="nextStep(3)" class="w-2/3 bg-emerald-600 py-4 rounded-lg uppercase text-sm font-bold">Dalej: Praca i Ruch →</button>
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="nextStep(1)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm transition-all">
+                        ← Wstecz
+                    </button>
+                    <button type="button" onclick="nextStep(3)" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg uppercase text-sm shadow-lg transform active:scale-95 transition-all">
+                        Dalej: Styl Życia →
+                    </button>
                 </div>
             </div>
 
             <div id="step3" class="step-section hidden space-y-6">
-                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 3: Styl Życia</h2>
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 3: Styl Życia</h2>
 
                 <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                    <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">Aktywność Fizyczna</h3>
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase">Aktywność Fizyczna</h3>
+                        <span data-tippy-content="Regularny ruch wzmacnia mięsień sercowy, poprawia wrażliwość na insulinę i wydłuża telomery, co bezpośrednio przekłada się na wolniejsze starzenie się komórek." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+                    
                     <div class="grid grid-cols-2 gap-4 items-end">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 uppercase">Lata aktywności</label>
-                            <input type="number" id="year_activity" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        <div class="space-y-1">
+                            <label>Lata aktywności</label>
+                            <input type="number" id="year_activity" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 text-white">
                         </div>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 uppercase">Obecny poziom</label>
-                            <select id="current_level" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
+                        <div class="space-y-1">
+                            <label>Obecny poziom</label>
+                            <select id="current_level" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 text-white">
                                 <option value="sedentary">Siedzący</option>
                                 <option value="low_active">Mało Aktywny</option>
                                 <option value="active">Aktywny</option>
@@ -125,8 +334,16 @@
                 </div>
 
                 <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                    <h3 class="text-emerald-500 font-bold text-sm uppercase">Zawód</h3>
-                    <select id="occ_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 overflow-y-auto">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase">Zawód</h3>
+                        <span data-tippy-content="Rodzaj pracy determinuje Twój poziom 'ruchu tła'. Praca siedząca zwiększa ryzyko chorób metabolicznych, podczas gdy praca fizyczna o umiarkowanej intensywności stymuluje układ krążenia." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+                    
+                    <div class="space-y-1">
+                        <label>Typ wykonywanej pracy</label>
+                        <select id="occ_key" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 outline-none focus:border-emerald-500 text-white">
                         <optgroup label="IT & Technologia">
                             <option value="software_engineer">Programista</option>
                             <option value="frontend_dev">Frontend Developer</option>
@@ -240,7 +457,7 @@
 
                     <div>
                         <div class="flex justify-between items-center mb-1">
-                            <label class="block text-xs text-gray-400 uppercase">Dodatkowy stres (0.00 = Neutralny)</label>
+                            <label>Dodatkowy stres (0.00 = Neutralny)</label>
                             <span id="stressValue" class="text-emerald-400 font-bold">0.00</span>
                         </div>
                         <input type="range" id="stress_modifier" min="-0.1" max="0.3" step="0.01" value="0" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-emerald-500" oninput="document.getElementById('stressValue').innerText = this.value">
@@ -248,205 +465,295 @@
                 </div>
 
                 <div class="flex gap-4 mt-8 pb-2">
-        <button type="button" onclick="nextStep(2)" 
-                class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg transition-all uppercase text-sm">
-            ← Wstecz
-        </button>
-        <button type="button" onclick="nextStep(4)" class="w-2/3 bg-emerald-600 ...">Dalej: Środowisko →</button>
-    </div>
-</div>
+                    <button type="button" onclick="nextStep(2)" 
+                            class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg transition-all uppercase text-sm">
+                        ← Wstecz
+                    </button>
+                    <button type="button" onclick="nextStep(4)" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg uppercase text-sm shadow-lg transform active:scale-95 transition-all">
+                        Dalej: Środowisko →
+                    </button>
+                </div>
+            </div>
+        </div>
+
             <div id="step4" class="step-section hidden space-y-6">
-                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 4: Regeneracja i Otoczenie</h2>
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 4: Regeneracja i Otoczenie</h2>
 
-                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <div class="flex items-center gap-2">
                         <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
-                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Sen i Odpoczynek
+                             Sen i Odpoczynek
                         </h3>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 uppercase">Długość snu na dobę</label>
-                            <select id="sleep_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
-                                <option value="optimal_sleep">7 - 8 godzin (Złoty standard)</option>
-                                <option value="borderline_sleep">6 - 7 godzin (Lekki niedobór)</option>
-                                <option value="short_sleep">Poniżej 6 godzin (Deprywacja)</option>
-                                <option value="long_sleep">Powyżej 9 godzin (Nadmiar)</option>
-                            </select>
-                        </div>
+                        <span data-tippy-content="Podczas głębokiego snu organizm naprawia uszkodzenia DNA, usuwa toksyny z mózgu (układ glimfatyczny) i reguluje gospodarkę hormonalną. Przewlekły niedobór snu drastycznie przyspiesza wiek biologiczny." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
                     </div>
-
-                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
-                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Relacje Społeczne
-                        </h3>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 uppercase">Status relacji i wsparcia</label>
-                            <select id="relation_keys" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
-                                <option value="isolated">Izolacja (brak bliskich osób, rzadki kontakt z ludźmi)</option>
-                                <option value="average">Przeciętne (kilku znajomych, kontakt z rodziną, ale bez głębokich więzi)</option>
-                                <option value="strong">Silne (poczucie wspólnoty, kochająca rodzina, krąg wiernych przyjaciół)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
-                            <span class="w-2 h-2 bg-emerald-500 rounded-full"></span> Środowisko życia
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase">Lata w zanieczyszczonym otoczeniu</label>
-                                <input type="number" id="years_in_smog" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase">Obecna jakość powietrza</label>
-                                <select id="environment_air_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
-                                    <option value="microclimate">Uzdrowisko / Góry / Morze</option>
-                                    <option value="rural_clean">Czysta wieś / Blisko lasu</option>
-                                    <option value="standard_city">Typowe miasto / Przedmieścia</option>
-                                    <option value="polluted_city">Smog / Miasto przemysłowe</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1 uppercase">Poziom hałasu w miejscu zamieszkania</label>
-                            <select id="environment_noise_key" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500 outline-none">
-                                <option value="quiet">Cisza (tereny podmiejskie, wieś)</option>
-                                <option value="moderate" selected>Umiarkowanie (osiedle, boczna ulica)</option>
-                                <option value="noisy">Głośno (centrum, arteria komunikacyjna)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4">
-                        <button type="button" onclick="nextStep(3)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm">
-                            ← Wstecz
-                        </button>
-                        <button type="button" onclick="nextStep(5)" class="w-2/3 bg-emerald-600 ...">Dalej: Środowisko →</button>
+                    <div>
+                        <label>Długość snu na dobę</label>
+                        <select id="sleep_key" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
+                            <option value="optimal_sleep">7 - 8 godzin (Złoty standard)</option>
+                            <option value="borderline_sleep">6 - 7 godzin (Lekki niedobór)</option>
+                            <option value="short_sleep">Poniżej 6 godzin (Deprywacja)</option>
+                            <option value="long_sleep">Powyżej 9 godzin (Nadmiar)</option>
+                        </select>
                     </div>
                 </div>
-                    <div id="step5" class="step-section hidden space-y-6">
-                        <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 5: Odżywianie i Kofeina</h2>
 
-                        <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wider">Model żywienia</label>
-                                <select id="diet_choice" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600 focus:border-emerald-500">
-                                    <option value="longevity_diet">Dieta długowieczności (Śródziemnomorska)</option>
-                                    <option value="balanced">Dieta zbilansowana</option>
-                                    <option value="standard_western">Dieta zachodnia (Standard)</option>
-                                    <option value="ultra_processed">Dieta wysokoprzetworzona (Fast-food)</option>
-                                </select>
-                            </div>
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
+                            Relacje Społeczne
+                        </h3>
+                        <span data-tippy-content="Samotność jest uznawana za czynnik ryzyka porównywalny z paleniem 15 papierosów dziennie. Silne więzi społeczne obniżają poziom kortyzolu i chronią funkcje poznawcze na starość." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Status relacji i wsparcia</label>
+                        <select id="relation_keys" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
+                            <option value="isolated">Izolacja (brak bliskich osób)</option>
+                            <option value="average">Przeciętne (kilku znajomych, kontakt z rodziną)</option>
+                            <option value="strong">Silne (poczucie wspólnoty, krąg przyjaciół)</option>
+                        </select>
+                    </div>
+                </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
-                                    <input type="checkbox" id="sugar_addiction" class="w-4 h-4 accent-emerald-500">
-                                    <label for="sugar_addiction" class="text-xs text-gray-300">Nadmiar cukru codziennie</label>
-                                </div>
-                                <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
-                                    <input type="checkbox" id="low_hydration" class="w-4 h-4 accent-emerald-500">
-                                    <label for="low_hydration" class="text-xs text-gray-300">Słabe nawodnienie</label>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs text-gray-400 mb-1 uppercase">Lata złego odżywiania w przeszłości</label>
-                                <input type="number" id="years_history_input" value="0" class="w-full bg-gray-700 p-2 rounded text-sm border border-gray-600">
-                            </div>
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase flex items-center gap-2">
+                            Środowisko życia
+                        </h3>
+                        <span data-tippy-content="Pyły zawieszone (PM2.5) przenikają bezpośrednio do krwiobiegu, powodując stany zapalne. Hałas natomiast utrzymuje układ nerwowy w ciągłym trybie 'walcz lub uciekaj', co obciąża serce." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label>Lata w smogu</label>
+                            <input type="number" id="years_in_smog" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
                         </div>
-
-                        <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
-                            <h3 class="text-emerald-500 font-bold text-xs uppercase tracking-widest">Kofeina i Energetyki</h3>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[10px] text-gray-500 mb-1 uppercase">Źródło</label>
-                                    <select id="stimulants_choice" class="w-full bg-gray-700 p-2 rounded text-xs border border-gray-600">
-                                        <option value="none">Brak</option>
-                                        <option value="coffee_only">Kawa / Herbata</option>
-                                        <option value="energy_only">Tylko energetyki</option>
-                                        <option value="mixed">Mieszane</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] text-gray-500 mb-1 uppercase">Dawkowanie</label>
-                                    <select id="stimulants_dosages" class="w-full bg-gray-700 p-2 rounded text-xs border border-gray-600">
-                                        <option value="low">Małe (1 porcja)</option>
-                                        <option value="moderate">Średnie (2-3 porcje)</option>
-                                        <option value="high">Duże (4+ porcje)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4 pb-6">
-                            <button type="button" onclick="nextStep(4)" class="w-1/3 bg-gray-700 py-4 rounded-lg uppercase text-sm font-bold">Wstecz</button>
-                            <button type="button" onclick="nextStep(6)" class="w-2/3 bg-emerald-600 ...">Dalej: Styl Życia →</button>
+                        <div class="space-y-1">
+                            <label>Jakość powietrza</label>
+                            <select id="environment_air_key" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
+                                <option value="microclimate">Uzdrowisko / Góry / Morze</option>
+                                <option value="rural_clean">Czysta wieś / Blisko lasu</option>
+                                <option value="standard_city">Typowe miasto / Przedmieścia</option>
+                                <option value="polluted_city">Smog / Miasto przemysłowe</option>
+                            </select>
                         </div>
                     </div>
+                    <div class="space-y-1">
+                        <label>Poziom hałasu</label>
+                        <select id="environment_noise_key" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
+                            <option value="quiet">Cisza (tereny podmiejskie, wieś)</option>
+                            <option value="moderate" selected>Umiarkowanie (osiedle)</option>
+                            <option value="noisy">Głośno (centrum, arteria)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button type="button" onclick="nextStep(3)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm transition-all">
+                        ← Wstecz
+                    </button>
+                    <button type="button" onclick="nextStep(5)" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg uppercase text-sm shadow-lg transform active:scale-95 transition-all">
+                        Dalej: Odżywianie →
+                    </button>
+                </div>
+            </div>
+            <div id="step5" class="step-section hidden space-y-6">
+                <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 5: Odżywianie i Kofeina</h2>
+
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-sm uppercase">Model żywienia</h3>
+                        <span data-tippy-content="Dieta długowieczności opiera się na niskim spożyciu czerwonego mięsa, dużej ilości nienasyconych kwasów tłuszczowych (oliwa, orzechy) oraz błonnika. Dieta zachodnia (wysokoprzetworzona) drastycznie skraca telomery." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+
+                    <div>
+                        <label>Wybierz swój profil</label>
+                        <select id="diet_choice" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white transition-all">
+                            <option value="longevity_diet">Dieta długowieczności (Śródziemnomorska)</option>
+                            <option value="balanced">Dieta zbilansowana</option>
+                            <option value="standard_western">Dieta zachodnia (Standard)</option>
+                            <option value="ultra_processed">Dieta wysokoprzetworzona (Fast-food)</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
+                            <input type="checkbox" id="sugar_addiction" class="w-4 h-4 accent-emerald-500">
+                            <label for="sugar_addiction" class="text-xs text-gray-300">Nadmiar cukru codziennie</label>
+                        </div>
+                        <div class="flex items-center gap-3 bg-gray-900/30 p-2 rounded border border-gray-700">
+                            <input type="checkbox" id="low_hydration" class="w-4 h-4 accent-emerald-500">
+                            <label for="low_hydration" class="text-xs text-gray-300">Słabe nawodnienie</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <label>Lata złego odżywiania w przeszłości</label>
+                            <span data-tippy-content="Nawet jeśli teraz jesz zdrowo, wieloletnie błędy dietetyczne z przeszłości mogły pozostawić ślady epigenetyczne w Twoim organizmie." class="cursor-help text-emerald-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                            </span>
+                        </div>
+                        <input type="number" id="years_history_input" value="0" class="w-full bg-gray-700 p-2 rounded-lg text-sm border border-gray-600 focus:border-emerald-500 outline-none text-white">
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-emerald-500 font-bold text-xs uppercase tracking-widest">Kofeina i Energetyki</h3>
+                        <span data-tippy-content="Kawa i herbata są bogate w polifenole, które chronią serce. Energetyki natomiast często zawierają sztuczne słodziki i taurynę w dawkach, które przy nadmiarze obciążają układ krążenia." class="cursor-help text-emerald-500 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label>Źródło</label>
+                            <select id="stimulants_choice" class="w-full bg-gray-700 p-2 rounded-lg text-xs border border-gray-600 focus:border-emerald-500 text-white outline-none">
+                                <option value="none">Brak</option>
+                                <option value="coffee_only">Kawa / Herbata</option>
+                                <option value="energy_only">Tylko energetyki</option>
+                                <option value="mixed">Mieszane</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label>Dawkowanie</label>
+                            <select id="stimulants_dosages" class="w-full bg-gray-700 p-2 rounded-lg text-xs border border-gray-600 focus:border-emerald-500 text-white outline-none">
+                                <option value="low">Małe (1 porcja)</option>
+                                <option value="moderate">Średnie (2-3 porcje)</option>
+                                <option value="high">Duże (4+ porcje)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 pb-6">
+                    <button type="button" onclick="nextStep(4)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white py-4 rounded-lg uppercase text-sm font-bold transition-all">
+                        Wstecz
+                    </button>
+                    <button type="button" onclick="nextStep(6)" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white py-4 rounded-lg uppercase text-sm font-bold shadow-lg transform active:scale-95 transition-all">
+                        Dalej: Nawyki →
+                    </button>
+                </div>
+            </div>
+
                     <div id="step6" class="step-section hidden space-y-6">
-                        <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic">Krok 6: Styl Życia i Nawyki</h2>
+                        <h2 class="text-xl font-bold text-emerald-400 border-b border-gray-700 pb-2 italic text-left">Krok 6: Styl Życia i Nawyki</h2>
                         
-                        <p class="text-xs text-gray-400 mb-4">Zaznacz wszystkie stwierdzenia, które są prawdziwe w Twoim przypadku:</p>
+                        <p>Zaznacz wszystkie stwierdzenia, które są prawdziwe w Twoim przypadku:</p>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="life_purpose" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="life_purpose" class="text-xs text-gray-300">Mam w życiu jasny cel i pasję</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+                            
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="life_purpose" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Mam w życiu jasny cel i pasję</label>
+                                <span data-tippy-content="Badania nad 'Ikigai' wskazują, że poczucie sensu życia redukuje stres i obniża ryzyko chorób serca oraz Alzheimera." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="dental_hygiene" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="dental_hygiene" class="text-xs text-gray-300">Codziennie nitkuję zęby / używam irygatora</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="dental_hygiene" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Nitkuję zęby / używam irygatora</label>
+                                <span data-tippy-content="Bakterie wywołujące stany zapalne dziąseł mogą przedostawać się do krwiobiegu, zwiększając ryzyko miażdżycy." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="fast_walking" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="fast_walking" class="text-xs text-gray-300">Moje naturalne tempo marszu jest szybkie</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="fast_walking" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Szybkie naturalne tempo marszu</label>
+                                <span data-tippy-content="Szybkość chodu jest skorelowana z wydolnością układu krążenia i siłą mięśniową." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="optimism" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="optimism" class="text-xs text-gray-300">Jestem optymistą</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="optimism" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Jestem optymistą</label>
+                                <span data-tippy-content="Optymiści statystycznie żyją o 11-15% dłużej dzięki niższemu poziomowi kortyzolu." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="lifelong_learning" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="lifelong_learning" class="text-xs text-gray-300">Regularnie uczę się nowych rzeczy</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="lifelong_learning" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Regularnie uczę się nowych rzeczy</label>
+                                <span data-tippy-content="Ciągła stymulacja mózgu buduje tzw. 'rezerwę poznawczą', opóźniając objawy starzenia." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="thermal_hormesis" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="thermal_hormesis" class="text-xs text-gray-300">Stosuję saunę lub morsowanie</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="thermal_hormesis" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Stosuję saunę lub morsowanie</label>
+                                <span data-tippy-content="Ekstremalne temperatury aktywują 'białka szoku cieplnego', które naprawiają uszkodzone komórki." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="pet_ownership" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="pet_ownership" class="text-xs text-gray-300">Posiadam zwierzę domowe (np. pies)</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="pet_ownership" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Posiadam zwierzę domowe</label>
+                                <span data-tippy-content="Posiadanie psa wymusza ruch i obniża ciśnienie krwi poprzez uwalnianie oksytocyny." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors">
-                                <input type="checkbox" id="air_quality" class="subtle-check w-5 h-5 accent-emerald-500">
-                                <label for="air_quality" class="text-xs text-gray-300">Używam oczyszczacza powietrza</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-gray-800/40 p-3 rounded border border-gray-700 hover:border-emerald-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="air_quality" class="subtle-check w-5 h-5 accent-emerald-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Używam oczyszczacza powietrza</label>
+                                <span data-tippy-content="Filtry HEPA usuwają pyły PM2.5, które są jednym z głównych czynników przyspieszających starzenie." class="cursor-help text-emerald-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
-                                <input type="checkbox" id="noise_pollution" class="subtle-check w-5 h-5 accent-red-500">
-                                <label for="noise_pollution" class="text-xs text-gray-300">Często sypiam w hałasie</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30 hover:border-red-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="noise_pollution" class="subtle-check w-5 h-5 accent-red-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Często sypiam w hałasie</label>
+                                <span data-tippy-content="Hałas nocny zaburza fazę snu głębokiego (N3), co pogarsza regenerację mózgu." class="cursor-help text-red-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
-                                <input type="checkbox" id="sitting_time" class="subtle-check w-5 h-5 accent-red-500">
-                                <label for="sitting_time" class="text-xs text-gray-300">Siedzę powyżej 8h dziennie</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30 hover:border-red-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="sitting_time" class="subtle-check w-5 h-5 accent-red-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Siedzę powyżej 8h dziennie</label>
+                                <span data-tippy-content="Długotrwałe siedzenie wyłącza aktywność enzymu lipazy lipoproteinowej, co sprzyja stanom zapalnym." class="cursor-help text-red-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
 
-                            <div class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30">
-                                <input type="checkbox" id="screen_before_sleep" class="subtle-check w-5 h-5 accent-red-500">
-                                <label for="screen_before_sleep" class="text-xs text-gray-300">Używam ekranów tuż przed snem</label>
+                            <div onclick="if(event.target.tagName !== 'INPUT') { let cb = this.querySelector('input'); cb.checked = !cb.checked; }" 
+                                 class="flex items-center gap-3 bg-red-900/10 p-3 rounded border border-red-900/30 hover:border-red-500/50 transition-colors cursor-pointer select-none">
+                                <input type="checkbox" id="screen_before_sleep" class="subtle-check w-5 h-5 accent-red-500 cursor-pointer">
+                                <label class="flex-grow text-xs cursor-pointer">Ekrany tuż przed snem</label>
+                                <span data-tippy-content="Niebieskie światło hamuje wydzielanie melatoniny, co pogarsza jakość snu i regenerację." class="cursor-help text-red-500 px-1" onclick="event.stopPropagation();">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                                </span>
                             </div>
+
                         </div>
 
                         <div class="flex gap-4 pb-8">
                             <button type="button" onclick="nextStep(5)" class="w-1/3 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-lg uppercase text-sm">Wstecz</button>
-                            <button type="button" id="calculateBtn" onclick="sendData()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg shadow-lg uppercase text-sm tracking-widest">OBLICZ WYNIK KOŃCOWY</button>
+                            <button type="button" id="calculateBtn" onclick="sendData()" class="w-2/3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-lg shadow-lg uppercase text-sm tracking-widest transition-all active:scale-95">OBLICZ WYNIK KOŃCOWY</button>
                         </div>
                     </div>
 
@@ -526,6 +833,7 @@ const labelMap = {
  */
 async function sendData() {
     console.log("Inicjacja obliczeń...");
+
 
     const btn = document.getElementById('calculateBtn');
     const resultBox = document.getElementById('resultBox');
@@ -650,7 +958,17 @@ async function sendData() {
         btn.innerText = "OBLICZ WYNIK";
         btn.disabled = false;
     }
+
 }
+document.addEventListener('DOMContentLoaded', function() {
+    tippy('[data-tippy-content]', {
+        theme: 'translucent',
+        animation: 'scale',
+        allowHTML: true,
+        arrow: true
+    });
+});
+
     </script>
 </body>
 </html>
